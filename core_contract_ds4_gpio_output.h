@@ -5,6 +5,13 @@
 #include "core_contract_ds4_gpio_config.h"
 #include "gpio.h"
 
+/* DS4 PROVISIONAL (FIXME): the POS_OUT1/POS_OUT2 selectors are inherited from the
+   DB3-derived map, but DS4 has NO GPIO_PL_POS_OUT6/POS_OUT2 (see 933_gpio.h). To
+   unblock the DS4 build, the switch bodies below drive spare VALID DS4 pins
+   (POS_OUT1 selector -> POS_OUT6, POS_OUT2 selector -> POS_OUT7). The real DS4
+   function->output assignment (via config_933_gpio.h) is DEFERRED. DO NOT bench/
+   vehicle-flash with brake on the placeholder pin before that mapping is finalized. */
+
 static void core_contract_ds4_gpio_output_on(gpio_iface_output_selector_t output_selector)
 {
     switch (output_selector)
@@ -14,8 +21,8 @@ static void core_contract_ds4_gpio_output_on(gpio_iface_output_selector_t output
         case GPIO_IFACE_OUTPUT_NEG_OUT3: gpio_pl_set(GPIO_PL_NEG_OUT3); break;
         case GPIO_IFACE_OUTPUT_NEG_OUT4: gpio_pl_set(GPIO_PL_NEG_OUT4); break;
         case GPIO_IFACE_OUTPUT_NEG_OUT5: gpio_pl_set(GPIO_PL_NEG_OUT5); break;
-        case GPIO_IFACE_OUTPUT_POS_OUT1: gpio_pl_set(GPIO_PL_POS_OUT1); break;
-        case GPIO_IFACE_OUTPUT_POS_OUT2: gpio_pl_set(GPIO_PL_POS_OUT2); break;
+        case GPIO_IFACE_OUTPUT_POS_OUT1: gpio_pl_set(GPIO_PL_POS_OUT6); break;
+        case GPIO_IFACE_OUTPUT_POS_OUT2: gpio_pl_set(GPIO_PL_POS_OUT7); break;
         case GPIO_IFACE_OUTPUT_RELAY1: gpio_pl_set(GPIO_PL_RLY1_CTL); break;
         case GPIO_IFACE_OUTPUT_RELAY2: gpio_pl_set(GPIO_PL_RLY2_CTL); break;
         case GPIO_IFACE_OUTPUT_RF_LOOP_POWER: gpio_pl_set(GPIO_PL_RFLOOP_POWER); break;
@@ -38,8 +45,8 @@ static void core_contract_ds4_gpio_output_off(gpio_iface_output_selector_t outpu
         case GPIO_IFACE_OUTPUT_NEG_OUT3: gpio_pl_clr(GPIO_PL_NEG_OUT3); break;
         case GPIO_IFACE_OUTPUT_NEG_OUT4: gpio_pl_clr(GPIO_PL_NEG_OUT4); break;
         case GPIO_IFACE_OUTPUT_NEG_OUT5: gpio_pl_clr(GPIO_PL_NEG_OUT5); break;
-        case GPIO_IFACE_OUTPUT_POS_OUT1: gpio_pl_clr(GPIO_PL_POS_OUT1); break;
-        case GPIO_IFACE_OUTPUT_POS_OUT2: gpio_pl_clr(GPIO_PL_POS_OUT2); break;
+        case GPIO_IFACE_OUTPUT_POS_OUT1: gpio_pl_clr(GPIO_PL_POS_OUT6); break;
+        case GPIO_IFACE_OUTPUT_POS_OUT2: gpio_pl_clr(GPIO_PL_POS_OUT7); break;
         case GPIO_IFACE_OUTPUT_RELAY1: gpio_pl_clr(GPIO_PL_RLY1_CTL); break;
         case GPIO_IFACE_OUTPUT_RELAY2: gpio_pl_clr(GPIO_PL_RLY2_CTL); break;
         case GPIO_IFACE_OUTPUT_RF_LOOP_POWER: gpio_pl_clr(GPIO_PL_RFLOOP_POWER); break;
@@ -62,8 +69,8 @@ static void core_contract_ds4_gpio_output_toggle(gpio_iface_output_selector_t ou
         case GPIO_IFACE_OUTPUT_NEG_OUT3: gpio_pl_tog(GPIO_PL_NEG_OUT3); break;
         case GPIO_IFACE_OUTPUT_NEG_OUT4: gpio_pl_tog(GPIO_PL_NEG_OUT4); break;
         case GPIO_IFACE_OUTPUT_NEG_OUT5: gpio_pl_tog(GPIO_PL_NEG_OUT5); break;
-        case GPIO_IFACE_OUTPUT_POS_OUT1: gpio_pl_tog(GPIO_PL_POS_OUT1); break;
-        case GPIO_IFACE_OUTPUT_POS_OUT2: gpio_pl_tog(GPIO_PL_POS_OUT2); break;
+        case GPIO_IFACE_OUTPUT_POS_OUT1: gpio_pl_tog(GPIO_PL_POS_OUT6); break;
+        case GPIO_IFACE_OUTPUT_POS_OUT2: gpio_pl_tog(GPIO_PL_POS_OUT7); break;
         case GPIO_IFACE_OUTPUT_RELAY1: gpio_pl_tog(GPIO_PL_RLY1_CTL); break;
         case GPIO_IFACE_OUTPUT_RELAY2: gpio_pl_tog(GPIO_PL_RLY2_CTL); break;
         case GPIO_IFACE_OUTPUT_RF_LOOP_POWER: gpio_pl_tog(GPIO_PL_RFLOOP_POWER); break;
